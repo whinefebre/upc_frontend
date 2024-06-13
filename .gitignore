@@ -1,0 +1,134 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Production
+/build
+
+# Next.js Serverless target output
+.next-tf/
+.next-tf-output/
+.next-standalone/
+
+# Vercel/Now
+.vercel/
+now.json
+
+# Static files
+public/static/
+
+# Testing
+coverage/
+*.lcov
+
+# Dependency directories
+node_modules/
+.pnp
+.pnp.js
+
+# TypeScript
+*.tsbuildinfo
+
+# Miscellaneous
+.DS_Store
+*.pem
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+.env
+.env.test
+*.env.example
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Parcel-bundler cache
+.cache/
+
+# Mac system files
+.DS_Store
+
+# Optional npm cache directory
+.npm
+
+# ESLint cache
+.eslintcache
+
+# React Native
+*.expo
+
+# Storybook files
+out-storybook/
+.storybook/build/
+
+# Build artifacts
+build/
+dist/
+
+# Configuration files
+next.config.js
+
+# Environment variable files
+.env*
+
+# Editor directories and files
+.vscode/
+.idea/
+
+# Yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Tern JS
+.tern-port
+
+# SvelteKit
+.svelte-kit
+
+# Netlify
+.netlify
+
+# Firebase
+.firebase
+
+# Cypress
+.cypress_cache/
+
+# Parcel
+.cache/
+
+# Local coverage reports
+coverage/
+
+# Docker
+.dockerignore
+.docker
+
+# Bower
+.bower_components
+
+# Capacitor
+ios/App/App.xcodeproj/xcuserdata/
+ios/App/App.xcodeproj/project.xcworkspace/xcuserdata/
+android/.cxx
+android/.gradle
+android/build/
+android/captions/
