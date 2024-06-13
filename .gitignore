@@ -42,13 +42,6 @@ node_modules/
 # Miscellaneous
 .DS_Store
 *.pem
-*.env.local
-*.env.development.local
-*.env.test.local
-*.env.production.local
-.env
-.env.test
-*.env.example
 .vscode/
 .idea/
 *.suo
@@ -82,9 +75,6 @@ dist/
 
 # Configuration files
 next.config.js
-
-# Environment variable files
-.env*
 
 # Editor directories and files
 .vscode/
