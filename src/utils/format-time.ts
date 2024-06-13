@@ -1,4 +1,4 @@
-import { format, getTime, formatDistanceToNow } from 'date-fns';
+import { format, getTime, formatDistanceToNow, parseISO } from 'date-fns';
 
 // ----------------------------------------------------------------------
 
@@ -7,7 +7,11 @@ type InputValue = Date | string | number | null | undefined;
 export function fDate(date: InputValue, newFormat?: string) {
   const fm = newFormat || 'dd MMM yyyy';
 
-  return date ? format(new Date(date), fm) : '';
+  if (!date) return '-';
+
+  const parsedDate = typeof date === 'string' && date.includes('-') ? parseISO(date) : new Date(date);
+
+  return format(parsedDate, fm);
 }
 
 export function fTime(date: InputValue, newFormat?: string) {

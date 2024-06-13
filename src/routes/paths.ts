@@ -146,6 +146,16 @@ export const paths = {
         edit: `${ROOTS.DASHBOARD}/invoice/${MOCK_ID}/edit`,
       },
     },
+    geolocation: {
+      root: `${ROOTS.DASHBOARD}/geolocation`,
+      new: `${ROOTS.DASHBOARD}/geolocation/new`,
+      details: (id: string) => `${ROOTS.DASHBOARD}/geolocation/${id}`,
+      edit: (id: string) => `${ROOTS.DASHBOARD}/geolocation/${id}/edit`,
+      demo: {
+        details: `${ROOTS.DASHBOARD}/geolocation/${MOCK_ID}`,
+        edit: `${ROOTS.DASHBOARD}/geolocation/${MOCK_ID}/edit`,
+      },
+    },
     post: {
       root: `${ROOTS.DASHBOARD}/post`,
       new: `${ROOTS.DASHBOARD}/post/new`,

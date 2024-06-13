@@ -1,7 +1,7 @@
 'use client';
 
 import sumBy from 'lodash/sumBy';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -51,18 +51,35 @@ import InvoiceAnalytic from '../invoice-analytic';
 import InvoiceTableRow from '../invoice-table-row';
 import InvoiceTableToolbar from '../invoice-table-toolbar';
 import InvoiceTableFiltersResult from '../invoice-table-filters-result';
+import FileUploadButton from '../../../components/file-upload/fileUploadButton'
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'invoiceNumber', label: 'Customer' },
-  { id: 'createDate', label: 'Create' },
-  { id: 'dueDate', label: 'Due' },
-  { id: 'price', label: 'Amount' },
-  { id: 'sent', label: 'Sent', align: 'center' },
+  { id: 'Project_No', label: 'Project No' },
+  { id: 'Date_Issue', label: 'Date Issue' },
+  { id: 'Expiry_Dat', label: 'Expiry Date' },
+  { id: 'PO_Chairma', label: 'PO Chairman' },
+  { id: 'CBFMA_No_', label: 'Sent', align: 'CBFMA No' },
   { id: 'status', label: 'Status' },
   { id: '' },
 ];
+
+  // Project_No: properties.Project_No || "-",
+  // Proj_Name: properties.Proj_Name || "-",
+  // Tenure_Nam: properties.Tenure_Nam || "-",
+  // Land_type: properties.Land_type || "-",
+  // Original_N: properties.Original_N || "-",
+  // Province: properties.Province || "-",
+  // Municipali: properties.Municipali || "-",
+  // Barangays: properties.Barangays || "-",
+  // PO_Chairma: properties.PO_Chairma || "-",
+  // Contact_Nu: properties.Contact_Nu || "-",
+  // CBFMA_No_: properties.CBFMA_No_ || "-",
+  // Date_Issue: properties.Date_Issue || "-",
+  // Expiry_Dat: properties.Expiry_Dat || "-",
+  // Area_ha: properties.Area_ha !== undefined ? properties.Area_ha : "-",
+  // Status: properties.Status || "-",
 
 const defaultFilters: IInvoiceTableFilters = {
   name: '',
@@ -87,7 +104,7 @@ export default function GeoLocationListView() {
 
   const confirm = useBoolean();
 
-  const [tableData, setTableData] = useState<IInvoice[]>(_invoices);
+  const [tableData, setTableData] = useState<IInvoice[]>([]);
 
   const [filters, setFilters] = useState(defaultFilters);
 
@@ -130,22 +147,22 @@ export default function GeoLocationListView() {
   const TABS = [
     { value: 'all', label: 'All', color: 'default', count: tableData.length },
     {
-      value: 'paid',
-      label: 'Paid',
+      value: 'Started',
+      label: 'Started',
       color: 'success',
-      count: getInvoiceLength('paid'),
+      count: getInvoiceLength('Started'),
     },
     {
-      value: 'pending',
-      label: 'Pending',
+      value: 'Not yet Started',
+      label: 'Not yet Started',
       color: 'warning',
-      count: getInvoiceLength('pending'),
+      count: getInvoiceLength('Not yet Started'),
     },
     {
-      value: 'overdue',
-      label: 'Overdue',
+      value: 'Unidentified Area',
+      label: 'Unidentified Area',
       color: 'error',
-      count: getInvoiceLength('overdue'),
+      count: getInvoiceLength('Unidentified Area'),
     },
     {
       value: 'draft',
@@ -217,6 +234,36 @@ export default function GeoLocationListView() {
     [handleFilters]
   );
 
+  //efects
+
+  useEffect(()=>{
+    const geoJsonData = localStorage.getItem('uploadedData');
+    if (geoJsonData) {
+      const parsedData = JSON.parse(geoJsonData);
+      const mappedProjects = parsedData.features.map((feature: { properties: any; }) => {
+        const properties = feature.properties;
+        return {
+          Project_No: properties.Project_No || "-",
+          Proj_Name: properties.Proj_Name || "-",
+          Tenure_Nam: properties.Tenure_Nam || "-",
+          Land_type: properties.Land_type || "-",
+          Original_N: properties.Original_N || "-",
+          Province: properties.Province || "-",
+          Municipali: properties.Municipali || "-",
+          Barangays: properties.Barangays || "-",
+          PO_Chairma: properties.PO_Chairma || "-",
+          Contact_Nu: properties.Contact_Nu || "-",
+          CBFMA_No_: properties.CBFMA_No_ || "-",
+          Date_Issue: properties.Date_Issue || "-",
+          Expiry_Dat: properties.Expiry_Dat || "-",
+          Area_ha: properties.Area_ha !== undefined ? properties.Area_ha : "-",
+          status: properties.Status || "-",
+        };
+      });
+      setTableData(mappedProjects);
+    }
+  }, [])
+
   return (
     <>
       <Container maxWidth={settings.themeStretch ? false : 'lg'}>
@@ -228,22 +275,15 @@ export default function GeoLocationListView() {
               href: paths.dashboard.root,
             },
             {
-              name: 'Invoice',
-              href: paths.dashboard.invoice.root,
+              name: 'Geolocation',
+              href: paths.dashboard.geolocation.root,
             },
             {
               name: 'List',
             },
           ]}
           action={
-            <Button
-              component={RouterLink}
-              href={paths.dashboard.invoice.new}
-              variant="contained"
-              startIcon={<Iconify icon="mingcute:add-line" />}
-            >
-              New Invoice
-            </Button>
+            <FileUploadButton />
           }
           sx={{
             mb: { xs: 3, md: 5 },
@@ -271,28 +311,28 @@ export default function GeoLocationListView() {
               />
 
               <InvoiceAnalytic
-                title="Paid"
-                total={getInvoiceLength('paid')}
-                percent={getPercentByStatus('paid')}
-                price={getTotalAmount('paid')}
+                title="Started"
+                total={getInvoiceLength('Started')}
+                percent={getPercentByStatus('Started')}
+                price={getTotalAmount('Started')}
                 icon="solar:file-check-bold-duotone"
                 color={theme.palette.success.main}
               />
 
               <InvoiceAnalytic
-                title="Pending"
-                total={getInvoiceLength('pending')}
-                percent={getPercentByStatus('pending')}
-                price={getTotalAmount('pending')}
+                title="Not yet started"
+                total={getInvoiceLength('Not yet Started')}
+                percent={getPercentByStatus('Not yet Started')}
+                price={getTotalAmount('Not yet Started')}
                 icon="solar:sort-by-time-bold-duotone"
                 color={theme.palette.warning.main}
               />
 
               <InvoiceAnalytic
-                title="Overdue"
-                total={getInvoiceLength('overdue')}
-                percent={getPercentByStatus('overdue')}
-                price={getTotalAmount('overdue')}
+                title="Unidentified Area"
+                total={getInvoiceLength('Unidentified Area')}
+                percent={getPercentByStatus('Unidentified Area')}
+                price={getTotalAmount('Unidentified Area')}
                 icon="solar:bell-bing-bold-duotone"
                 color={theme.palette.error.main}
               />
@@ -338,13 +378,13 @@ export default function GeoLocationListView() {
             ))}
           </Tabs>
 
-          <InvoiceTableToolbar
+          {/* <InvoiceTableToolbar
             filters={filters}
             onFilters={handleFilters}
             //
             dateError={dateError}
             serviceOptions={INVOICE_SERVICE_OPTIONS.map((option) => option.name)}
-          />
+          /> */}
 
           {canReset && (
             <InvoiceTableFiltersResult

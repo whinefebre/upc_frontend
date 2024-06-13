@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { GoogleMap, LoadScript, Polygon, Polyline, Marker, useJsApiLoader } from '@react-google-maps/api';
-
+import proj4 from 'proj4';
 
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -24,7 +24,6 @@ import Scrollbar from 'src/components/scrollbar';
 import { TableHeadCustom } from 'src/components/table';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-import proj4 from 'proj4';
 // ----------------------------------------------------------------------
 
 type RowProps = {

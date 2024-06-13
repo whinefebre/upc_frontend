@@ -1,4 +1,4 @@
-import { InvoiceListView } from 'src/sections/invoice/view';
+import { GeoLocationListView } from 'src/sections/geolocation/view';
 
 // ----------------------------------------------------------------------
 
@@ -7,5 +7,5 @@ export const metadata = {
 };
 
 export default function InvoiceListPage() {
-  return <InvoiceListView />;
+  return <GeoLocationListView />;
 }
