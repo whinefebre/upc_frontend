@@ -3,6 +3,45 @@ import { _mock } from './_mock';
 // APP
 // ----------------------------------------------------------------------
 
+
+interface GeoJSONFeature {
+  type: string;
+  properties: {
+    Project_No: string;
+    Proj_Name: string;
+    Tenure_Nam: string;
+    Land_type: string;
+    Original_N: string;
+    Province: string | null;
+    Municipali: string;
+    Barangays: string;
+    PO_Chairma: string;
+    Contact_Nu: string;
+    CBFMA_No_: string;
+    Date_Issue: string;
+    Expiry_Dat: string;
+    Area_ha: number;
+    Status: string;
+  };
+  geometry: {
+    type: string;
+    coordinates: any[];
+  };
+}
+
+interface GeoJSON {
+  type: string;
+  name: string;
+  crs: {
+    type: string;
+    properties: {
+      name: string;
+    };
+  };
+  features: GeoJSONFeature[];
+}
+
+
 export const _appRelated = ['Chrome', 'Drive', 'Dropbox', 'Evernote', 'Github'].map(
   (name, index) => {
     const system = [2, 4].includes(index) ? 'Windows' : 'Mac';
@@ -46,17 +85,97 @@ export const _appAuthors = [...Array(3)].map((_, index) => ({
   totalFavorites: _mock.number.nativeL(index),
 }));
 
+
+// Sample GeoJSON object
+const geoJsonData: GeoJSON = {
+  "type": "FeatureCollection",
+  "name": "UPD_Project",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::32651"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "Project_No": "IP2-027",
+        "Proj_Name": "Jessie",
+        "Tenure_Nam": "CB-TFLMA",
+        "Land_type": "CBFMA",
+        "Original_N": "Tambo Forest Land Managers Association  of Negros Oriental, Inc. (TFLMAI)",
+        "Province": null,
+        "Municipali": "Ayungon",
+        "Barangays": "Tambo",
+        "PO_Chairma": "Evelyn D. Salimbagat",
+        "Contact_Nu": "09753993056",
+        "CBFMA_No_": "42168",
+        "Date_Issue": "2001-11-27",
+        "Expiry_Dat": "2026-11-27",
+        "Area_ha": 62.7592,
+        "Status": "Not yet Started"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          // Coordinates omitted for brevity
+        ]
+      }
+    },
+    // More features...
+  ]
+};
+
+
+// Map the GeoJSON data to your required format
+export const mappedProjects = geoJsonData.features.map((feature, index) => {
+  const properties = feature.properties;
+  return {
+    Project_No: properties.Project_No,
+    Proj_Name: properties.Proj_Name,
+    Tenure_Nam: properties.Tenure_Nam,
+    Land_type: properties.Land_type,
+    Original_N: properties.Original_N,
+    Province: properties.Province,
+    Municipali: properties.Municipali,
+    Barangays: properties.Barangays,
+    PO_Chairma: properties.PO_Chairma,
+    Contact_Nu: properties.Contact_Nu,
+    CBFMA_No_: properties.CBFMA_No_,
+    Date_Issue: properties.Date_Issue,
+    Expiry_Dat: properties.Expiry_Dat,
+    Area_ha: properties.Area_ha,
+    Status: properties.Status,
+  };
+});
+
+// Example of using mappedProjects
+console.log(mappedProjects);
+
+
 export const _appInvoices = [...Array(5)].map((_, index) => {
   const category = ['Android', 'Mac', 'Windows', 'Android', 'Mac'][index];
 
   const status = ['paid', 'out of date', 'progress', 'paid', 'paid'][index];
 
+  
   return {
-    id: _mock.id(index),
-    invoiceNumber: `INV-199${index}`,
-    price: _mock.number.price(index),
-    category,
-    status,
+    Project_No: _mock.id(index),
+    // Proj_Name: `INV-199${index}`,
+    // Tenure_Nam: _mock.number.price(index),
+    // Land_type: ,
+    // Original_N: ,
+    // Province: ,
+    // Municipali: ,
+    // Barangays: ,
+    // PO_Chairma: ,
+    // Contact_Nu: ,
+    // CBFMA_No_: ,
+    // Date_Issue: ,
+    // Expiry_Dat: ,
+    // Area_ha: ,
+    // status: ,
   };
 });
 
