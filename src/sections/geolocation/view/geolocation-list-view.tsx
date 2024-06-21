@@ -52,6 +52,7 @@ import InvoiceTableRow from '../invoice-table-row';
 import InvoiceTableToolbar from '../invoice-table-toolbar';
 import InvoiceTableFiltersResult from '../invoice-table-filters-result';
 import FileUploadButton from '../../../components/file-upload/fileUploadButton'
+import Geomap from 'src/components/geomap/geomap';
 
 // ----------------------------------------------------------------------
 
@@ -289,6 +290,16 @@ export default function GeoLocationListView() {
             mb: { xs: 3, md: 5 },
           }}
         />
+        <Card
+          sx={{
+            mb: { xs: 3, md: 5 },
+          }}
+        >
+        <Geomap>
+          
+          </Geomap>
+  
+        </Card>
 
         <Card
           sx={{
